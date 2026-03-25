@@ -1,154 +1,282 @@
-<!DOCTYPE html><html lang="en">
+<!DOCTYPE html>
+<html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>School Result Portal</title><style>
-body {
-  margin: 0;
-  font-family: 'Segoe UI', sans-serif;
-  background: linear-gradient(135deg,#0f2027,#203a43,#2c5364);
-  color: #000;
-}
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Annual Examination Results 2025-26 | Ram Thakur Chaudhary Inter College</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap');
 
-.container {
-  max-width: 500px;
-  margin: 40px auto;
-  text-align: center;
-}
+    body {
+      margin: 0;
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+      color: #fff;
+      min-height: 100vh;
+    }
 
-input {
-  padding: 10px;
-  width: 70%;
-  border-radius: 8px;
-  border: none;
-  margin: 5px;
-}
+    .container {
+      max-width: 550px;
+      margin: 40px auto;
+      padding: 20px;
+      text-align: center;
+    }
 
-button {
-  padding: 10px 15px;
-  margin-top: 10px;
-  border: none;
-  border-radius: 8px;
-  background: #0072ff;
-  color: white;
-  cursor: pointer;
-}
+    .header-main {
+      background: rgba(255,255,255,0.1);
+      backdrop-filter: blur(10px);
+      padding: 30px 20px;
+      border-radius: 15px;
+      margin-bottom: 30px;
+      border: 1px solid rgba(255,255,255,0.2);
+    }
 
-.marksheet {
-  background: white;
-  padding: 20px;
-  margin-top: 20px;
-  border-radius: 10px;
-  box-shadow: 0 0 10px rgba(0,0,0,0.3);
-  text-align: left;
-}
+    .school-name {
+      font-size: 28px;
+      font-weight: 700;
+      line-height: 1.2;
+      margin: 10px 0;
+      color: #fff;
+    }
 
-.header {
-  text-align: center;
-  border-bottom: 2px solid black;
-  margin-bottom: 10px;
-}
+    .sub-title {
+      font-size: 18px;
+      font-weight: 500;
+      opacity: 0.95;
+      margin: 8px 0;
+    }
 
-.header h2 {
-  margin: 5px 0;
-}
+    .result-title {
+      font-size: 22px;
+      font-weight: 600;
+      color: #ffd700;
+      margin-top: 15px;
+    }
 
-.table {
-  width: 100%;
-  border-collapse: collapse;
-  margin-top: 10px;
-}
+    input {
+      padding: 14px 18px;
+      width: 78%;
+      max-width: 320px;
+      border-radius: 10px;
+      border: none;
+      margin: 10px 0;
+      font-size: 16px;
+      background: rgba(255,255,255,0.95);
+      color: #000;
+    }
 
-.table th, .table td {
-  border: 1px solid black;
-  padding: 5px;
-  text-align: center;
-}
+    button {
+      padding: 14px 30px;
+      margin: 15px 8px;
+      border: none;
+      border-radius: 10px;
+      background: linear-gradient(90deg, #0072ff, #00c6ff);
+      color: white;
+      cursor: pointer;
+      font-size: 17px;
+      font-weight: 600;
+      transition: all 0.3s;
+    }
 
-.footer {
-  margin-top: 30px;
-  text-align: right;
-}
+    button:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 20px rgba(0, 114, 255, 0.4);
+    }
 
-.download {
-  margin-top: 10px;
-  background: green;
-}
+    .marksheet {
+      background: white;
+      color: #000;
+      padding: 30px;
+      margin-top: 25px;
+      border-radius: 15px;
+      box-shadow: 0 15px 35px rgba(0,0,0,0.5);
+      text-align: left;
+      border: 2px solid #003087;
+    }
 
-</style></head><body><div class="container">
-  <h2 style="color:white">Check Result</h2>
-  <input type="text" id="classInput" placeholder="Enter Class">
-  <br>
-  <input type="text" id="rollInput" placeholder="Enter Roll Number">
-  <br>
-  <button onclick="checkResult()">Search</button>  <div id="resultBox"></div>
-</div><script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.9.2/html2pdf.bundle.min.js"></script><script>
-async function checkResult() {
-  let roll = document.getElementById("rollInput").value.trim();
-  let cls = document.getElementById("classInput").value.trim();
-  let resultBox = document.getElementById("resultBox");
+    .marksheet-header {
+      text-align: center;
+      border-bottom: 3px solid #003087;
+      padding-bottom: 20px;
+      margin-bottom: 20px;
+    }
 
-  resultBox.innerHTML = "Loading...";
+    .marksheet-header h2 {
+      margin: 8px 0;
+      color: #003087;
+    }
 
-  let response = await fetch("results.csv");
-  let text = await response.text();
+    .table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 20px 0;
+      font-size: 15px;
+    }
 
-  let rows = text.split("\n").map(r => r.replace("\r","").split(","));
-  let data = rows.slice(1);
+    .table th, .table td {
+      border: 1px solid #555;
+      padding: 10px;
+      text-align: center;
+    }
 
-  let student = data.find(row => 
-    Number(row[0]) === Number(roll) && row[3].trim() === cls
-  );
+    .table th {
+      background: #003087;
+      color: white;
+    }
 
-  if(student){
-    resultBox.innerHTML = `
-    <div class="marksheet" id="marksheet">
-      <div class="header">
-        <h2>Ram Thakur Chaudhary Inter College</h2>
-        <h3>Parsauna Balrampur - 271604</h3>
-        <h3>Annual Examination Result 2025-26</h3>
-      </div>
+    .result-info {
+      font-size: 17px;
+      margin: 12px 0;
+      font-weight: 500;
+    }
 
-      <p><b>Student Name:</b> ${student[1]}</p>
-      <p><b>Father Name:</b> ${student[2]}</p>
-      <p><b>Class:</b> ${student[3]}</p>
-      <p><b>Roll No:</b> ${student[0]}</p>
+    .percentage {
+      font-size: 20px;
+      font-weight: 700;
+      color: #003087;
+    }
 
-      <table class="table">
-        <tr>
-          <th>Subject</th>
-          <th>Marks</th>
-        </tr>
-        <tr><td>Hindi</td><td>${student[4]}</td></tr>
-        <tr><td>English</td><td>${student[5]}</td></tr>
-        <tr><td>Maths</td><td>${student[6]}</td></tr>
-        <tr><td>Science</td><td>${student[7]}</td></tr>
-        <tr><td>Social Science</td><td>${student[8]}</td></tr>
-        <tr><td>Moral Edu. & G.K</td><td>${student[9]}</td></tr>
-        <tr><td>Arts</td><td>${student[10]}</td></tr>
-      </table>
+    .footer {
+      margin-top: 40px;
+      padding-top: 15px;
+      border-top: 1px solid #ddd;
+      text-align: center;
+      font-size: 14px;
+      color: #555;
+    }
 
-      <p><b>Total:</b> ${student[11]}</p>
-      <p><b>Result:</b> ${student[12]}</p>
-      <p><b>Grade:</b> ${student[13]}</p>
+    .download {
+      background: linear-gradient(90deg, #28a745, #34d058);
+      margin-top: 20px;
+      padding: 14px 35px;
+      font-size: 17px;
+    }
 
-      <div class="footer">
-        <p><i>Digitally Signed by</i></p>
-        <p><b>Rajveer Singh</b></p>
-        <p>Assistant Teacher</p>
-      </div>
+    .download:hover {
+      background: linear-gradient(90deg, #218838, #2ea44f);
+    }
+
+    #resultBox {
+      margin-top: 20px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <!-- Professional Front Page Header -->
+    <div class="header-main">
+      <h1 class="school-name">Ram Thakur Chaudhary Inter College</h1>
+      <p class="sub-title">Parsauna, Balrampur, Uttar Pradesh - 271604</p>
+      <div class="result-title">Annual Examination Results 2025-26</div>
     </div>
 
-    <button class="download" onclick="downloadPDF()">Download PDF</button>
-    `;
-  } else {
-    resultBox.innerHTML = "❌ Result not found (Check Class & Roll No)";
-  }
-}
+    <h2 style="color:#fff; margin-bottom:20px;">Check Your Result</h2>
 
-function downloadPDF(){
-  let element = document.getElementById("marksheet");
-  html2pdf().from(element).save();
-}
-</script></body>
+    <input type="text" id="classInput" placeholder="Enter Class (e.g. 9)" onkeypress="if(event.key==='Enter') checkResult()">
+    <br>
+    <input type="text" id="rollInput" placeholder="Enter Roll Number" onkeypress="if(event.key==='Enter') checkResult()">
+    <br>
+    <button onclick="checkResult()">🔍 Search Result</button>
+
+    <div id="resultBox"></div>
+  </div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.9.2/html2pdf.bundle.min.js"></script>
+  <script>
+    async function checkResult() {
+      const roll = document.getElementById("rollInput").value.trim();
+      const cls = document.getElementById("classInput").value.trim();
+      const resultBox = document.getElementById("resultBox");
+
+      if (!roll || !cls) {
+        resultBox.innerHTML = `<p style="color:#ff6b6b; font-weight:600;">⚠️ Please enter both Class and Roll Number</p>`;
+        return;
+      }
+
+      resultBox.innerHTML = `<p style="color:#fff;">Searching your result...</p>`;
+
+      try {
+        const response = await fetch("results.csv");
+        if (!response.ok) throw new Error("Results file not found");
+
+        const text = await response.text();
+        const rows = text.split("\n").map(r => r.trim().replace("\r","").split(","));
+        const data = rows.slice(1);
+
+        const student = data.find(row => 
+          Number(row[0]) === Number(roll) && 
+          String(row[3]).trim().toLowerCase() === String(cls).trim().toLowerCase()
+        );
+
+        if (student && student.length >= 14) {
+          const total = parseFloat(student[11]) || 0;
+          const percentage = total > 0 ? (total / 700 * 100).toFixed(2) : 0;   // Assuming 700 total marks (7 subjects × 100)
+
+          resultBox.innerHTML = `
+            <div class="marksheet" id="marksheet">
+              <div class="marksheet-header">
+                <h2>Ram Thakur Chaudhary Inter College</h2>
+                <h3>Parsauna, Balrampur - 271604 (U.P.)</h3>
+                <h3>Annual Examination Result 2025-26</h3>
+              </div>
+
+              <p><b>Student Name:</b> ${student[1] || 'N/A'}</p>
+              <p><b>Father's Name:</b> ${student[2] || 'N/A'}</p>
+              <p><b>Class:</b> ${student[3] || 'N/A'} &nbsp;&nbsp;&nbsp; <b>Roll No:</b> ${student[0] || 'N/A'}</p>
+
+              <table class="table">
+                <tr>
+                  <th>Subject</th>
+                  <th>Marks Obtained</th>
+                </tr>
+                <tr><td>Hindi</td><td>${student[4] || 0}</td></tr>
+                <tr><td>English</td><td>${student[5] || 0}</td></tr>
+                <tr><td>Maths</td><td>${student[6] || 0}</td></tr>
+                <tr><td>Science</td><td>${student[7] || 0}</td></tr>
+                <tr><td>Social Science</td><td>${student[8] || 0}</td></tr>
+                <tr><td>Moral Education & G.K.</td><td>${student[9] || 0}</td></tr>
+                <tr><td>Arts</td><td>${student[10] || 0}</td></tr>
+              </table>
+
+              <div class="result-info">
+                <p><b>Total Marks:</b> ${total} / 700</p>
+                <p class="percentage">Percentage: ${percentage}%</p>
+                <p><b>Result:</b> ${student[12] || 'N/A'}</p>
+                <p><b>Grade:</b> ${student[13] || 'N/A'}</p>
+              </div>
+
+              <div class="footer">
+                <p><i>Digitally Signed</i></p>
+                <p><b>Rajveer Singh</b></p>
+                <p>Assistant Teacher</p>
+                <p style="margin-top:15px; font-size:13px;">Date: 26 March 2026</p>
+              </div>
+            </div>
+
+            <button class="download" onclick="downloadPDF()">📥 Download Result as PDF</button>
+          `;
+        } else {
+          resultBox.innerHTML = `<p style="color:#ff6b6b; font-weight:600;">❌ Result not found. Please check Class and Roll Number.</p>`;
+        }
+      } catch (err) {
+        resultBox.innerHTML = `<p style="color:#ff6b6b;">❌ Unable to load results. Make sure <b>results.csv</b> is in the same folder.</p>`;
+      }
+    }
+
+    function downloadPDF() {
+      const element = document.getElementById("marksheet");
+      if (!element) return;
+
+      const opt = {
+        margin: [0.4, 0.4, 0.4, 0.4],
+        filename: 'Annual_Result_2025-26.pdf',
+        image: { type: 'jpeg', quality: 0.98 },
+        html2canvas: { scale: 3, useCORS: true },
+        jsPDF: { unit: 'in', format: 'a4', orientation: 'portrait' }
+      };
+
+      html2pdf().set(opt).from(element).save();
+    }
+  </script>
+</body>
 </html>
