@@ -28,32 +28,12 @@ body {
   border: 2px solid white;
 }
 
-.header-main h1 {
-  margin: 5px;
-  font-size: 26px;
-  font-weight: bold;
-}
+.header-main h1 { margin: 5px; font-size: 26px; font-weight: bold; }
+.header-main h3 { margin: 5px; color: #e6f7ff; }
+.header-main h2 { margin-top: 10px; color: yellow; letter-spacing: 1px; }
+.header-main p { margin-top: 5px; font-size: 14px; }
 
-.header-main h3 {
-  margin: 5px;
-  color: #e6f7ff;
-}
-
-.header-main h2 {
-  margin-top: 10px;
-  color: yellow;
-  letter-spacing: 1px;
-}
-
-.header-main p {
-  margin-top: 5px;
-  font-size: 14px;
-}
-
-@keyframes fadeIn {
-  from {opacity: 0; transform: translateY(-20px);} 
-  to {opacity: 1; transform: translateY(0);} 
-}
+@keyframes fadeIn { from {opacity: 0; transform: translateY(-20px);} to {opacity: 1; transform: translateY(0);} }
 
 input {
   padding: 12px;
@@ -76,45 +56,77 @@ button {
   transition: 0.3s;
 }
 
-button:hover {
-  background: #0072ff;
-  color: white;
-}
+button:hover { background: #0072ff; color: white; }
 
+/* === STRONG ANTI-FADE FIXES START HERE === */
 .marksheet {
-  background: #ffffff !important;     /* Solid white - fixes fading */
-  padding: 30px;
+  background: #ffffff !important;
+  padding: 35px 25px;
   margin-top: 20px;
   border-radius: 15px;
-  box-shadow: none;                   /* Shadow doesn't render well in PDF */
-  color: #000000;
+  box-shadow: none;
+  color: #000000 !important;
   animation: fadeIn 1s ease;
-  border: 3px solid #0072ff;
+  border: 4px solid #003366;
+  width: 100%;
+  max-width: 100%;
+}
+
+.marksheet * {
+  color: #111111 !important;           /* Force ALL text to dark black */
+  font-weight: 700 !important;         /* Extra bold */
+}
+
+.marksheet h2 {
+  text-align: center;
+  color: #003366 !important;
+  font-size: 28px !important;
+  margin-bottom: 25px;
+  letter-spacing: 1px;
+}
+
+.marksheet p {
+  font-size: 16px !important;
+  margin: 8px 0;
+  color: #111111 !important;
 }
 
 .table {
   width: 100%;
   border-collapse: collapse;
-  margin-top: 15px;
+  margin-top: 20px;
 }
 
 .table th {
-  background: linear-gradient(#0072ff,#00c6ff) !important;
-  color: white;
-  padding: 10px;
+  background: #003366 !important;      /* SOLID dark blue - no gradient */
+  color: #ffffff !important;
+  padding: 12px;
+  font-size: 16px;
 }
 
-.table th, .table td {
-  border: 1px solid #000000;
-  padding: 10px;
+.table td {
+  padding: 12px;
+  font-size: 16px;
+  border: 2px solid #111111;
   text-align: center;
-  font-size: 15px;
 }
 
 .footer-sign {
-  margin-top: 40px;
+  margin-top: 50px;
   text-align: right;
-  color: #000000;
+  color: #111111 !important;
+}
+
+/* Download button */
+.download {
+  margin-top: 20px;
+  background: #008000;
+  color: white;
+  padding: 14px 25px;
+  font-size: 17px;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
 }
 
 .main-footer {
@@ -125,14 +137,6 @@ button:hover {
   text-align: center;
   font-size: 14px;
   color: #ddd;
-}
-
-.download {
-  margin-top: 15px;
-  background: #008000;
-  color: white;
-  padding: 12px 20px;
-  font-size: 16px;
 }
 </style>
 </head>
@@ -196,12 +200,12 @@ async function checkResult() {
     if (student && student.length > 12) {
       resultBox.innerHTML = `
       <div class="marksheet" id="marksheet">
-        <h2 style="text-align:center;color:#003366;font-size:26px;margin-bottom:20px;">Result Marksheet</h2>
+        <h2>Result Marksheet</h2>
 
-        <p><b style="color:#003366;">Name:</b> ${student[1]}</p>
-        <p><b style="color:#003366;">Father Name:</b> ${student[2]}</p>
-        <p><b style="color:#003366;">Class:</b> ${student[3]}</p>
-        <p><b style="color:#003366;">Roll No:</b> ${student[0]}</p>
+        <p><b>Name:</b> ${student[1]}</p>
+        <p><b>Father Name:</b> ${student[2]}</p>
+        <p><b>Class:</b> ${student[3]}</p>
+        <p><b>Roll No:</b> ${student[0]}</p>
 
         <table class="table">
           <tr><th>Subject</th><th>Marks</th></tr>
@@ -214,9 +218,9 @@ async function checkResult() {
           <tr><td>Arts</td><td>${student[10]}</td></tr>
         </table>
 
-        <p style="font-size:18px;margin:15px 0;"><b style="color:#003366;">Total:</b> ${student[11]} / 600</p>
-        <p style="font-size:18px;"><b style="color:#003366;">Result:</b> <span style="color:${student[12]==='Pass' ? '#008000' : '#d32f2f'};font-weight:bold;">${student[12]}</span></p>
-        <p style="font-size:18px;"><b style="color:#003366;">Grade:</b> ${student[13]}</p>
+        <p style="font-size:19px;margin:20px 0 8px;"><b>Total:</b> ${student[11]} / 600</p>
+        <p style="font-size:19px;"><b>Result:</b> <span style="color:${student[12]==='Pass' ? '#006400' : '#8B0000'};">${student[12]}</span></p>
+        <p style="font-size:19px;"><b>Grade:</b> ${student[13]}</p>
 
         <div class="footer-sign">
           <p><i>Digitally Signed by</i></p>
@@ -240,14 +244,16 @@ function downloadPDF() {
   const element = document.getElementById("marksheet");
 
   const opt = {
-    margin: [15, 15, 15, 15],
+    margin: [12, 12, 12, 12],
     filename: `Result_Class${document.getElementById("classInput").value.trim()}_Roll${document.getElementById("rollInput").value.trim()}.pdf`,
-    image: { type: 'jpeg', quality: 0.98 },
+    image: { type: 'jpeg', quality: 1.0 },           // Max quality
     html2canvas: {
-      scale: 3,                    // Higher = sharper, less faded
+      scale: 4,                                      // Ultra sharp (this fixes whiteness)
       useCORS: true,
-      backgroundColor: '#ffffff',  // Force pure white
-      logging: false
+      backgroundColor: '#ffffff',
+      logging: false,
+      width: element.offsetWidth,
+      height: element.offsetHeight
     },
     jsPDF: {
       unit: 'mm',
