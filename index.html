@@ -1,0 +1,116 @@
+<!DOCTYPE html><html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Student Result Portal</title><style>
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+  color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+.container {
+  background: rgba(255,255,255,0.1);
+  backdrop-filter: blur(10px);
+  padding: 30px;
+  border-radius: 20px;
+  width: 320px;
+  text-align: center;
+  box-shadow: 0 0 20px rgba(0,0,0,0.5);
+}
+
+h1 {
+  margin-bottom: 20px;
+}
+
+input {
+  width: 80%;
+  padding: 10px;
+  border-radius: 10px;
+  border: none;
+  outline: none;
+}
+
+button {
+  margin-top: 15px;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 10px;
+  background: #00c6ff;
+  color: black;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+button:hover {
+  background: #0072ff;
+  color: white;
+}
+
+#resultBox {
+  margin-top: 20px;
+  padding: 15px;
+  border-radius: 15px;
+  background: rgba(0,0,0,0.4);
+}
+
+.success {
+  border: 2px solid lime;
+}
+
+.error {
+  border: 2px solid red;
+}
+
+</style></head><body><div class="container">
+  <h1>Check Result</h1>
+  <input type="text" id="rollInput" placeholder="Enter Roll Number">
+  <br>
+  <button onclick="checkResult()">Check Result</button>  <div id="resultBox"></div>
+</div><script>
+async function checkResult() {
+  let roll = document.getElementById("rollInput").value.trim();
+  let resultBox = document.getElementById("resultBox");
+
+  resultBox.className = "";
+  resultBox.innerHTML = "Checking...";
+
+  try {
+    let response = await fetch("https://apricot-jacquelyn-71.tiiny.site/?mode=suggestions"); // or paste Google CSV link
+    let text = await response.text();
+
+    let rows = text.split("\n").map(r => r.split(","));
+    let headers = rows[0];
+    let data = rows.slice(1);
+
+    let student = data.find(row => row[0] === roll);
+
+    if (student) {
+      resultBox.classList.add("success");
+      resultBox.innerHTML = `
+        <h3>${student[1]}</h3>
+        <p>Class: ${student[2]}</p>
+        <p>Math: ${student[3]}</p>
+        <p>Science: ${student[4]}</p>
+        <p>English: ${student[5]}</p>
+        <hr>
+        <p>Total: ${student[6]}</p>
+        <p><b>Result: ${student[7]}</b></p>
+      `;
+    } else {
+      resultBox.classList.add("error");
+      resultBox.innerHTML = "❌ Result not found";
+    }
+
+  } catch (error) {
+    resultBox.classList.add("error");
+    resultBox.innerHTML = "Error loading results";
+  }
+}
+</script></body>
+</html>
