@@ -1,8 +1,11 @@
-<!DOCTYPE html><html lang="en">
+<!DOCTYPE html>
+<html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>School Result Portal</title><style>
+<title>School Result Portal</title>
+
+<style>
 body {
   margin: 0;
   font-family: 'Segoe UI', sans-serif;
@@ -11,27 +14,40 @@ body {
 }
 
 .container {
-  max-width: 600px;
+  max-width: 650px;
   margin: 40px auto;
   text-align: center;
 }
 
 .header-main {
-  padding: 20px;
-  background: rgba(255,255,255,0.1);
-  border-radius: 15px;
-  backdrop-filter: blur(10px);
-  box-shadow: 0 0 20px rgba(0,0,0,0.5);
+  padding: 25px;
+  background: linear-gradient(135deg,#00c6ff,#0072ff);
+  border-radius: 20px;
+  box-shadow: 0 0 30px rgba(0,0,0,0.6);
   animation: fadeIn 1.5s ease;
+  border: 2px solid white;
 }
 
 .header-main h1 {
   margin: 5px;
+  font-size: 26px;
+  font-weight: bold;
 }
 
 .header-main h3 {
   margin: 5px;
-  color: #00e6ff;
+  color: #e6f7ff;
+}
+
+.header-main h2 {
+  margin-top: 10px;
+  color: yellow;
+  letter-spacing: 1px;
+}
+
+.header-main p {
+  margin-top: 5px;
+  font-size: 14px;
 }
 
 @keyframes fadeIn {
@@ -40,20 +56,22 @@ body {
 }
 
 input {
-  padding: 10px;
-  width: 70%;
-  border-radius: 8px;
+  padding: 12px;
+  width: 75%;
+  border-radius: 10px;
   border: none;
-  margin: 5px;
+  margin: 6px;
+  font-size: 14px;
 }
 
 button {
-  padding: 10px 15px;
+  padding: 12px 18px;
   margin-top: 10px;
   border: none;
-  border-radius: 8px;
-  background: #00c6ff;
+  border-radius: 10px;
+  background: #00e6ff;
   color: black;
+  font-weight: bold;
   cursor: pointer;
   transition: 0.3s;
 }
@@ -64,42 +82,46 @@ button:hover {
 }
 
 .marksheet {
-  background: linear-gradient(white,#f1f1f1);
-  padding: 20px;
+  background: linear-gradient(white,#f9f9f9);
+  padding: 25px;
   margin-top: 20px;
-  border-radius: 10px;
-  box-shadow: 0 0 15px rgba(0,0,0,0.5);
+  border-radius: 15px;
+  box-shadow: 0 0 20px rgba(0,0,0,0.6);
   color: black;
   animation: fadeIn 1s ease;
+  border: 2px solid #0072ff;
 }
 
 .table {
   width: 100%;
   border-collapse: collapse;
-  margin-top: 10px;
+  margin-top: 15px;
 }
 
 .table th {
-  background: #0072ff;
+  background: linear-gradient(#0072ff,#00c6ff);
   color: white;
 }
 
 .table th, .table td {
   border: 1px solid black;
-  padding: 6px;
+  padding: 8px;
   text-align: center;
 }
 
-.footer {
+.footer-sign {
   margin-top: 30px;
   text-align: right;
 }
 
-.page-footer {
+.main-footer {
+  margin-top: 50px;
+  padding: 15px;
+  background: rgba(255,255,255,0.1);
+  border-top: 1px solid rgba(255,255,255,0.3);
   text-align: center;
-  margin-top: 30px;
-  color: #ccc;
   font-size: 14px;
+  color: #ddd;
 }
 
 .download {
@@ -107,19 +129,42 @@ button:hover {
   background: green;
 }
 
-</style></head><body><div class="container">  <div class="header-main">
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+  <div class="header-main">
     <h1>Ram Thakur Chaudhary Inter College</h1>
-    <h3>Parsauna Balrampur - 271604</h3>
+    <h3>Parsauna, Balrampur - 271604</h3>
     <h3>Annual Examination 2025-26</h3>
-    <h2 style="color:yellow">Result Live</h2>
+    <h2>RESULT LIVE</h2>
     <p>Students can check and download their results now</p>
-  </div>  <br>  <input type="text" id="classInput" placeholder="Enter Class">
+  </div>
+
+  <br>
+
+  <input type="text" id="classInput" placeholder="Enter Class">
   <br>
   <input type="text" id="rollInput" placeholder="Enter Roll Number">
   <br>
-  <button onclick="checkResult()">Check Result</button>  <div id="resultBox"></div>  <div class="page-footer">
-    © 2025 Ram Thakur Chaudhary Inter College | All Rights Reserved
-  </div></div><script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.9.2/html2pdf.bundle.min.js"></script><script>
+  <button onclick="checkResult()">Check Result</button>
+
+  <div id="resultBox"></div>
+
+</div>
+
+<div class="main-footer">
+  <p>© 2025 Ram Thakur Chaudhary Inter College</p>
+  <p>Parsauna, Balrampur - 271604</p>
+  <p>All Rights Reserved | Designed by Rajveer Singh</p>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.9.2/html2pdf.bundle.min.js"></script>
+
+<script>
 async function checkResult() {
   let roll = document.getElementById("rollInput").value.trim();
   let cls = document.getElementById("classInput").value.trim();
@@ -165,7 +210,7 @@ async function checkResult() {
       <p><b>Result:</b> ${student[12]}</p>
       <p><b>Grade:</b> ${student[13]}</p>
 
-      <div class="footer">
+      <div class="footer-sign">
         <p><i>Digitally Signed by</i></p>
         <p><b>Rajveer Singh</b></p>
         <p>Assistant Teacher</p>
@@ -183,5 +228,13 @@ function downloadPDF(){
   let element = document.getElementById("marksheet");
   html2pdf().from(element).save();
 }
-</script></body>
+</script>
+
+<div class="main-footer">
+  <p>© 2025 Ram Thakur Chaudhary Inter College</p>
+  <p>Parsauna, Balrampur - 271604</p>
+  <p>All Rights Reserved | Designed by Rajveer Singh</p>
+</div>
+
+</body>
 </html>
