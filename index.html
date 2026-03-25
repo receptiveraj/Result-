@@ -81,7 +81,7 @@ async function checkResult() {
   resultBox.innerHTML = "Checking...";
 
   try {
-    let response = await fetch("https://apricot-jacquelyn-71.tiiny.site/?mode=suggestions"); // or paste Google CSV link
+    let response = await fetch("results.csv"); // or paste Google CSV link
     let text = await response.text();
 
     let rows = text.split("\n").map(r => r.split(","));
