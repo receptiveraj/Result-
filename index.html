@@ -2,115 +2,153 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Student Result Portal</title><style>
+<title>School Result Portal</title><style>
 body {
   margin: 0;
-  font-family: Arial, sans-serif;
-  background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
-  color: white;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100vh;
+  font-family: 'Segoe UI', sans-serif;
+  background: linear-gradient(135deg,#0f2027,#203a43,#2c5364);
+  color: #000;
 }
 
 .container {
-  background: rgba(255,255,255,0.1);
-  backdrop-filter: blur(10px);
-  padding: 30px;
-  border-radius: 20px;
-  width: 320px;
+  max-width: 500px;
+  margin: 40px auto;
   text-align: center;
-  box-shadow: 0 0 20px rgba(0,0,0,0.5);
-}
-
-h1 {
-  margin-bottom: 20px;
 }
 
 input {
-  width: 80%;
   padding: 10px;
-  border-radius: 10px;
+  width: 70%;
+  border-radius: 8px;
   border: none;
-  outline: none;
+  margin: 5px;
 }
 
 button {
-  margin-top: 15px;
-  padding: 10px 20px;
+  padding: 10px 15px;
+  margin-top: 10px;
   border: none;
-  border-radius: 10px;
-  background: #00c6ff;
-  color: black;
-  cursor: pointer;
-  transition: 0.3s;
-}
-
-button:hover {
+  border-radius: 8px;
   background: #0072ff;
   color: white;
+  cursor: pointer;
 }
 
-#resultBox {
+.marksheet {
+  background: white;
+  padding: 20px;
   margin-top: 20px;
-  padding: 15px;
-  border-radius: 15px;
-  background: rgba(0,0,0,0.4);
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0,0,0,0.3);
+  text-align: left;
 }
 
-.success {
-  border: 2px solid lime;
+.header {
+  text-align: center;
+  border-bottom: 2px solid black;
+  margin-bottom: 10px;
 }
 
-.error {
-  border: 2px solid red;
+.header h2 {
+  margin: 5px 0;
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 10px;
+}
+
+.table th, .table td {
+  border: 1px solid black;
+  padding: 5px;
+  text-align: center;
+}
+
+.footer {
+  margin-top: 30px;
+  text-align: right;
+}
+
+.download {
+  margin-top: 10px;
+  background: green;
 }
 
 </style></head><body><div class="container">
-  <h1>Check Result</h1>
+  <h2 style="color:white">Check Result</h2>
+  <input type="text" id="classInput" placeholder="Enter Class">
+  <br>
   <input type="text" id="rollInput" placeholder="Enter Roll Number">
   <br>
-  <button onclick="checkResult()">Check Result</button>  <div id="resultBox"></div>
-</div><script>
+  <button onclick="checkResult()">Search</button>  <div id="resultBox"></div>
+</div><script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.9.2/html2pdf.bundle.min.js"></script><script>
 async function checkResult() {
   let roll = document.getElementById("rollInput").value.trim();
+  let cls = document.getElementById("classInput").value.trim();
   let resultBox = document.getElementById("resultBox");
 
-  resultBox.className = "";
-  resultBox.innerHTML = "Checking...";
+  resultBox.innerHTML = "Loading...";
 
-  try {
-    let response = await fetch("results.csv"); // or paste Google CSV link
-    let text = await response.text();
+  let response = await fetch("results.csv");
+  let text = await response.text();
 
-    let rows = text.split("\n").map(r => r.split(","));
-    let headers = rows[0];
-    let data = rows.slice(1);
+  let rows = text.split("\n").map(r => r.replace("\r","").split(","));
+  let data = rows.slice(1);
 
-    let student = data.find(row => row[0] === roll);
+  let student = data.find(row => 
+    Number(row[0]) === Number(roll) && row[3].trim() === cls
+  );
 
-    if (student) {
-      resultBox.classList.add("success");
-      resultBox.innerHTML = `
-        <h3>${student[1]}</h3>
-        <p>Class: ${student[2]}</p>
-        <p>Math: ${student[3]}</p>
-        <p>Science: ${student[4]}</p>
-        <p>English: ${student[5]}</p>
-        <hr>
-        <p>Total: ${student[6]}</p>
-        <p><b>Result: ${student[7]}</b></p>
-      `;
-    } else {
-      resultBox.classList.add("error");
-      resultBox.innerHTML = "❌ Result not found";
-    }
+  if(student){
+    resultBox.innerHTML = `
+    <div class="marksheet" id="marksheet">
+      <div class="header">
+        <h2>Ram Thakur Chaudhary Inter College</h2>
+        <h3>Parsauna Balrampur - 271604</h3>
+        <h3>Annual Examination Result 2025-26</h3>
+      </div>
 
-  } catch (error) {
-    resultBox.classList.add("error");
-    resultBox.innerHTML = "Error loading results";
+      <p><b>Student Name:</b> ${student[1]}</p>
+      <p><b>Father Name:</b> ${student[2]}</p>
+      <p><b>Class:</b> ${student[3]}</p>
+      <p><b>Roll No:</b> ${student[0]}</p>
+
+      <table class="table">
+        <tr>
+          <th>Subject</th>
+          <th>Marks</th>
+        </tr>
+        <tr><td>Hindi</td><td>${student[4]}</td></tr>
+        <tr><td>English</td><td>${student[5]}</td></tr>
+        <tr><td>Maths</td><td>${student[6]}</td></tr>
+        <tr><td>Science</td><td>${student[7]}</td></tr>
+        <tr><td>Social Science</td><td>${student[8]}</td></tr>
+        <tr><td>Moral Edu. & G.K</td><td>${student[9]}</td></tr>
+        <tr><td>Arts</td><td>${student[10]}</td></tr>
+      </table>
+
+      <p><b>Total:</b> ${student[11]}</p>
+      <p><b>Result:</b> ${student[12]}</p>
+      <p><b>Grade:</b> ${student[13]}</p>
+
+      <div class="footer">
+        <p><i>Digitally Signed by</i></p>
+        <p><b>Rajveer Singh</b></p>
+        <p>Assistant Teacher</p>
+      </div>
+    </div>
+
+    <button class="download" onclick="downloadPDF()">Download PDF</button>
+    `;
+  } else {
+    resultBox.innerHTML = "❌ Result not found (Check Class & Roll No)";
   }
+}
+
+function downloadPDF(){
+  let element = document.getElementById("marksheet");
+  html2pdf().from(element).save();
 }
 </script></body>
 </html>
