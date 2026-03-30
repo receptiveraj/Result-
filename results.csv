@@ -1,6 +1,6 @@
 Roll,Name,FatherName,Class,Hindi,English,Maths,Science,SocialScience,MoralGK,Arts,Total,Result,Grade
 1,Ragini,Arbindu,7,93,93,77,87,93,86,96,625,Pass,A
-2,Komal,Ramsewak,7,90,85,66,81,86,84,89,681,Pass,A
+2,Komal,Ramsewak,7,85,90,74,83,87,81,93,593,Pass,A
 3,Bhagwantlal,Sheshram,7,77,69,68,70,69,56,81,490,Pass,B
 4,Manish,Ramayan,7,79,69,71,72,70,58,82,501,Pass,B
 5,Shivani,Manoj,7,79,66,57,64,62,65,65,458,Pass,B
@@ -8,8 +8,8 @@ Roll,Name,FatherName,Class,Hindi,English,Maths,Science,SocialScience,MoralGK,Art
 1,Waseem,Mahfooz,6,59,62,57,54,59,54,56,401,Pass,A
 3,Shadhna,Manku,6,58,56,53,50,54,49,47,367,Pass,B
 4,Sandhya,Tilakram,6,61,61,63,52,60,54,55,406,Pass,B
-5,Jyoti,Jagram,6,79,70,69,70,66,70,73,66,493,Pass,A
+5,Jyoti,Jagram,6,79,70,69,66,70,73,66,493,Pass,A
 1,Shraddha,Jwalaprasad,8,79,80,84,78,89,90,86,586,Pass,A
 2,Vishnu,Ramayan,8,57,57,56,55,53,58,56,392,Pass,B
 3,Anurag,Jaysundar,8,60,50,53,62,59,52,62,398,Pass,B
-5,Sattami,Jawaharlal,8,65,60,60,61,58,58,62,424,Pass,B
+5,Sattami,Jawaharlal,8,65,60,60,61,58,58,62,424,Pass,A
